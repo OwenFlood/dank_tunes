@@ -1,0 +1,30 @@
+<h1>JAMZZZZZ</h1>
+
+<!-- <button id="play-button" type="button" name="button">Play</button> -->
+<h4 id="now-playing">Now Playing:</h4>
+
+<script>
+
+  // document.querySelector("#play-button").addEventListener("click", function() {
+  //   scPlayer.play({streamUrl: 'https://api.soundcloud.com/tracks/264032488/stream'});
+  // });
+</script>
+
+<%
+client = SoundCloud.new(:client_id => "5d3aaf910add018f35ba65e325fcf227")
+tracks = client.get('/tracks', :limit => 10, :order => 'hotness')
+tracks.each do |track| %>
+  <a class="song-link" data-id="<%= track.id %>" href="#"><%= track.title %></a> <br> <br>
+<% end %>
+
+<script>
+  var scPlayer = new SoundCloudAudio('5d3aaf910add018f35ba65e325fcf227');
+
+  $(".song-link").click(function(event) {
+    var id = event.target.getAttribute("data-id")
+
+    scPlayer.play({streamUrl: 'https://api.soundcloud.com/tracks/' + id + '/stream'});
+
+    $("#now-playing").text("Now Playing: " + $(this).text())
+  });
+</script>
