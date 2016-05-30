@@ -1,3 +1,62 @@
 // Place all the styles related to the soundcloud controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.song {
+  border: 1px solid #979797;
+  width: 50%;
+  height: 66px;
+  display: flex;
+  // align-items: stretch;
+  // flex-direction: row;
+  // justify-content: center;
+
+  .song-time {
+    font-size: 21px;
+    width: 50%;
+    // margin-left: 100px;
+    // float: right;
+    display: flex;
+    // flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  .song-info-container {
+    margin: 5px;
+    width: 60%;
+
+    .song-name {
+      font-size: 21px;
+      font-weight: 200;
+      font-family: avenir-next;
+    }
+
+    .song-details {
+      font-size: 14px;
+      color: #979797;
+      font-family: avenir-next;
+    }
+  }
+
+  .host {
+    border-right: 1px solid #979797;
+    width: 15%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+
+    .logo {
+      height: 100%;
+      width: 64;
+    }
+  }
+}
+
+.song-waveform {
+  height: 90%;
+}
+.waveform {
+  width: 120%;
+  height: 100%;
+}

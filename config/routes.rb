@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   #   resources :products
   root "soundcloud#index"
   resources :soundcloud, only: :index
+  get "player" => "soundcloud#player"
 
   # Example resource route with options:
   #   resources :products do
