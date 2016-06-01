@@ -1,25 +1,7 @@
-<h1>JAMZZZZZ</h1>
-
-<!-- <button id="play-button" type="button" name="button">Play</button> -->
-<form id="search-box" class="" action="" method="post">
-  <input type="text" name="name" value="" id="search-term">
-  <input type="submit" name="name" value="Search">
-</form>
-
-<h4 id="now-playing">Now Playing:</h4>
-
-<script>
-  // document.querySelector("#play-button").addEventListener("click", function() {
-  //   scPlayer.play({streamUrl: 'https://api.soundcloud.com/tracks/264032488/stream'});
-  // });
-</script>
-
-<div class="song-list">
-  <% client = SoundCloud.new(:client_id => "5d3aaf910add018f35ba65e325fcf227")
-  tracks = client.get('/tracks', :limit => 10, :order => 'hotness')
-  tracks.each do |track| %>
-    <a class="song-link" data-id="<%= track.id %>" href="#"><%= track.title %></a> <br> <br>
-  <% end %>
-</div>
+<%= react_component "App", songs: @tracks %>
 
 <script src="https://connect.soundcloud.com/sdk/sdk-3.1.1.js"></script>
+
+<!-- <div class="navbar navbar-default navbar-fixed-bottom">
+    <p>This is a footer</p>
+</div> -->
