@@ -4,6 +4,8 @@ var App = React.createClass({
   },
   searchFilter: function(e) {
     e.preventDefault();
+
+    // Soundcloud api search
     $.ajax({
       method: "GET",
       url: "http://api.soundcloud.com/tracks.json",
@@ -16,6 +18,8 @@ var App = React.createClass({
         this.setState({songs: []});
       }
     });
+
+    
   },
   playMe: function(songName, songId) {
     event.preventDefault();
@@ -26,6 +30,7 @@ var App = React.createClass({
   render: function() {
     return <div className="container">
             <h1>Sweet Berry Wine</h1>
+            <YoutubeTest />
             <SearchBar onSearch={this.searchFilter} />
             <h3>Now Playing:</h3>
             <SongList playMe={this.playMe} songs={this.state.songs} />
