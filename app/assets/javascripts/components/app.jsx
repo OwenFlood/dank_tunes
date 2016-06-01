@@ -19,7 +19,18 @@ var App = React.createClass({
       }
     });
 
-    
+    // Youtube api search
+    $.ajax({
+      method: "GET",
+      url: "https://www.googleapis.com/youtube/v3/search",
+      data: {part: "id, snippet", q: $("#search-term").val(), key: "AIzaSyCgc_LxS73WKGeyFplInVMxuCR332dbOls"},
+      success: function(data) {
+        console.log(data);
+      },
+      error: function() {
+        console.log("nope");
+      }
+    });
   },
   playMe: function(songName, songId) {
     event.preventDefault();
@@ -30,7 +41,6 @@ var App = React.createClass({
   render: function() {
     return <div className="container">
             <h1>Sweet Berry Wine</h1>
-            <YoutubeTest />
             <SearchBar onSearch={this.searchFilter} />
             <h3>Now Playing:</h3>
             <SongList playMe={this.playMe} songs={this.state.songs} />
