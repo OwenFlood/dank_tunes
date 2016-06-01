@@ -2,7 +2,9 @@ var SongList = React.createClass({
   render: function() {
     if (this.props.songs.length > 0) {
       var allSongs = this.props.songs.map(function(song, index){
-        return <Song class="song-list" playMe={this.props.playMe} imageLink={song.artwork_url} songName={song.title} songId={song.id} author={song.user.username} key={index} />
+        console.log(song.songId);
+        console.log("<<<<<<<<<<<<<<<<<<<<<<<<");
+        return <Song class="song-list" playMe={this.props.playMe} imageLink={song.thumbnailLink} songName={song.songName} songId={song.songId} author={song.author} key={index} />
       }.bind(this));
 
       return <div>{allSongs}</div>
