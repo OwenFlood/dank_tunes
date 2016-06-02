@@ -4,29 +4,34 @@ var App = React.createClass({
   },
   parseSoundCloud: function(songs) {
     soundCloudSongs = []
-    var author;
-    var authors = [];
-
     for (var i = 0; i < songs.length; i++) {
-      if (songs[i].user) {
-        author = songs[i].user.username
-      } else {
-        author = "Unknown Artist"
-      }
-      authors.push(author)
       soundCloudSongs.push({
           songName: songs[i].title,
           songId: songs[i].id,
           thumbnailLink: songs[i].artwork_url,
-          author: author,
+          author: songs[i].user.username,
           source: "soundcloud"
       });
-      console.log(">>>>>>>>>>>>>>>>>>>>>");
-      console.log(songs[i].id);
-      console.log(">>>>>>>>>>>>>>>>>>>>>");
     }
-    // console.log(authors.length);
     return soundCloudSongs;
+  },
+  parseYouTube: function(songs) {
+    youtubeSongs = []
+    // console.log(songs.items);
+    // console.log("ID: " + songs.items[0].id.videoId);
+    // console.log("Name: " + songs.items[0].snippet.title);
+    // console.log("Author: " + songs.items[0].snippet.channelTitle);
+    // console.log("Thumbnail: " + songs.items[0].snippet.thumbnails.default.url);
+    for (var i = 0; i < songs.items.length; i++) {
+      youtubeSongs.push({
+          songName: songs.items[i].snippet.title,
+          songId: songs.items[i].id.videoId,
+          thumbnailLink: songs.items[i].snippet.thumbnails.default.url,
+          author: songs.items[i].snippet.channelTitle,
+          source: "youtube"
+      });
+    }
+    return youtubeSongs;
   },
   searchFilter: function(e) {
     e.preventDefault();
@@ -37,20 +42,15 @@ var App = React.createClass({
       url: "http://api.soundcloud.com/tracks.json",
       data: {client_id: "4346c8125f4f5c40ad666bacd8e96498", q: $("#search-term").val(), limit: "100", order: "hotness"},
       success: function(data) {
-        console.log(data);
-        console.log(data.length);
-        // this.setState({fetched: true});
         if(this.state.fetched){
           this.setState({songs: data.concat(this.parseSoundCloud(data)), fetched: true});
-          console.log(">>>>>>>>>>>>>>>>");
-          console.log(this.state.songs);
-          console.log(">>>>>>>>>>>>>>>>");
         } else {
           this.setState({songs: this.parseSoundCloud(data), fetched: true});
         }
       }.bind(this),
       error: function() {
-        this.setState({songs: []});
+        // this.setState({songs: []});
+        console.log("nope");
       }
     });
 
@@ -60,8 +60,12 @@ var App = React.createClass({
       url: "https://www.googleapis.com/youtube/v3/search",
       data: {part: "id, snippet", q: $("#search-term").val(), key: "AIzaSyCgc_LxS73WKGeyFplInVMxuCR332dbOls"},
       success: function(data) {
-        console.log(data.items);
-      },
+        if(this.state.fetched){
+          this.setState({songs: data.concat(this.parseYouTube(data)), fetched: true});
+        } else {
+          this.setState({songs: this.parseYouTube(data), fetched: true});
+        }
+      }.bind(this),
       error: function() {
         console.log("nope");
       }
