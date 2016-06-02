@@ -43,7 +43,7 @@ var App = React.createClass({
       data: {client_id: "4346c8125f4f5c40ad666bacd8e96498", q: $("#search-term").val(), limit: "100", order: "hotness"},
       success: function(data) {
         if(this.state.fetched){
-          this.setState({songs: data.concat(this.parseSoundCloud(data)), fetched: true});
+          this.setState({songs: this.state.songs.concat(this.parseSoundCloud(data)), fetched: true});
         } else {
           this.setState({songs: this.parseSoundCloud(data), fetched: true});
         }
@@ -61,7 +61,7 @@ var App = React.createClass({
       data: {part: "id, snippet", q: $("#search-term").val(), key: "AIzaSyCgc_LxS73WKGeyFplInVMxuCR332dbOls"},
       success: function(data) {
         if(this.state.fetched){
-          this.setState({songs: data.concat(this.parseYouTube(data)), fetched: true});
+          this.setState({songs: this.state.songs.concat(this.parseYouTube(data)), fetched: true});
         } else {
           this.setState({songs: this.parseYouTube(data), fetched: true});
         }
@@ -71,11 +71,18 @@ var App = React.createClass({
       }
     });
   },
-  playMe: function(songName, songId) {
+  playMe: function(songName, songId, source) {
+    // This is not preventing the default
     event.preventDefault();
+
+    if (source === "soundcloud") {
       var scPlayer = new SoundCloudAudio('5d3aaf910add018f35ba65e325fcf227');
       scPlayer.play({streamUrl: 'https://api.soundcloud.com/tracks/' + songId + '/stream'});
-      this.setState({currentSong: songName});
+    } else if (source === "youtube") {
+      console.log("PLAY YOUTUBE");
+    }
+
+    this.setState({currentSong: songName});
   },
   render: function() {
     return <div className="container">

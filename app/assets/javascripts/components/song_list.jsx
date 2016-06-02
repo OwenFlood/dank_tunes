@@ -13,11 +13,6 @@ var SongList = React.createClass({
 });
 
 var Song = React.createClass({
-  // playMe: function(e) {
-  //   e.preventDefault();
-  //   var scPlayer = new SoundCloudAudio('5d3aaf910add018f35ba65e325fcf227');
-  //   scPlayer.play({streamUrl: 'https://api.soundcloud.com/tracks/' + this.props.songId + '/stream'});
-  // },
   imageFilter: function() {
     if (this.props.imageLink) {
       return this.props.imageLink;
@@ -29,7 +24,7 @@ var Song = React.createClass({
     // var playMe = this.props.playMe.bind(null, {this.props.songName})
     return <div>
               <img src={this.imageFilter()} class="song-thumbnail" />
-              <span className="h4"><a href="#" onClick={() => this.props.playMe(this.props.songName, this.props.songId)}>{this.props.songName}</a></span> - {this.props.author} Source: {this.props.source}
+              <span className="h4"><a href="#" onClick={() => this.props.playMe(this.props.songName, this.props.songId, this.props.source)}>{this.props.songName}</a></span> - {this.props.author} Source: {this.props.source}
               <hr />
            </div>
   }
