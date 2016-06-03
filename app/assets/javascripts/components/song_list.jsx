@@ -20,11 +20,14 @@ var Song = React.createClass({
       return "http://www.unlimitune.com/images/soundcloud-button.png";
     }
   },
+  handleClick: function(event) {
+    this.props.playMe(event, this.props.songName, this.props.songId, this.props.source)
+  },
   render: function() {
     // var playMe = this.props.playMe.bind(null, {this.props.songName})
     return <div>
               <img src={this.imageFilter()} class="song-thumbnail" />
-              <span className="h4"><a href="#" onClick={() => this.props.playMe(this.props.songName, this.props.songId, this.props.source)}>{this.props.songName}</a></span> - {this.props.author} Source: {this.props.source}
+              <span className="h4"><a href="#" onClick={this.handleClick}>{this.props.songName}</a></span> - {this.props.author} Source: {this.props.source}
               <hr />
            </div>
   }
