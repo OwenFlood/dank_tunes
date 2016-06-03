@@ -1,6 +1,6 @@
 var App = React.createClass({
   getInitialState: function() {
-    return {songs: this.props.songs, currentSong: "", fetched: false, playYoutube: []}
+    return {songs: this.props.songs, currentSong: "", currentSource: "", playerVariable: null, fetched: false, playYoutube: []}
   },
   parseSoundCloud: function(songs) {
     soundCloudSongs = []
@@ -88,11 +88,16 @@ var App = React.createClass({
     event.preventDefault();
     scPlayer
 
+    if (this.state.currentSource === "soundcloud") {
+      this.state.playerVariable.stop();
+    }
+
     if (source === "soundcloud") {
       var scPlayer = new SoundCloudAudio('5d3aaf910add018f35ba65e325fcf227');
+      this.setState({currentSource: "soundcloud", playerVariable: scPlayer});
       scPlayer.play({streamUrl: 'https://api.soundcloud.com/tracks/' + songId + '/stream'});
     } else if (source === "youtube") {
-      this.setState({playYoutube: [songName, songId, source]});
+      this.setState({playYoutube: [songName, songId, source], currentSource: "youtube"});
     }
 
     this.setState({currentSong: songName});
