@@ -55,7 +55,7 @@ var App = React.createClass({
       success: function(data) {
         console.log(data);
         if(this.state.fetched){
-          this.setState({songs: this.state.songs.concat(this.parseSoundCloud(data)), fetched: true});
+          this.setState({songs: this.state.songs.concat(this.parseSoundCloud(data)), fetched: false});
         } else {
           this.setState({songs: this.parseSoundCloud(data), fetched: true});
         }
@@ -74,7 +74,7 @@ var App = React.createClass({
       success: function(data) {
         console.log(data);
         if(this.state.fetched){
-          this.setState({songs: this.state.songs.concat(this.parseYouTube(data)), fetched: true});
+          this.setState({songs: this.state.songs.concat(this.parseYouTube(data)), fetched: false});
         } else {
           this.setState({songs: this.parseYouTube(data), fetched: true});
         }
