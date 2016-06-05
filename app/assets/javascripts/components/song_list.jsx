@@ -2,7 +2,7 @@ var SongList = React.createClass({
   render: function() {
     if (this.props.songs.length > 0) {
       var allSongs = this.props.songs.map(function(song, index){
-        return <Song class="song-list" playMe={this.props.playMe} imageLink={song.thumbnailLink} songName={song.songName} songId={song.songId} author={song.author} source={song.source} key={index} />
+        return <Song class="song-list" playMe={this.props.playMe} imageLink={song.thumbnailLink} songName={song.songName} songId={song.songId} author={song.author} source={song.source} key={index} popularity={song.popularity} />
       }.bind(this));
 
       return <div>{allSongs}</div>
@@ -27,7 +27,7 @@ var Song = React.createClass({
     // var playMe = this.props.playMe.bind(null, {this.props.songName})
     return <div>
               <img src={this.imageFilter()} class="song-thumbnail" />
-              <span className="h4"><a href="#" onClick={this.handleClick}>{this.props.songName}</a></span> - {this.props.author} Source: {this.props.source}
+              <span className="h4"><a href="#" onClick={this.handleClick}>{this.props.songName}</a></span> - {this.props.author} <span className="h4">Source: </span> {this.props.source} <span className="h4">Popularity: </span> {this.props.popularity}
               <hr />
            </div>
   }
