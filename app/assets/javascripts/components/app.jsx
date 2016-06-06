@@ -95,6 +95,8 @@ var App = React.createClass({
 
     if (this.state.currentSource === "soundcloud") {
       this.state.playerVariable.stop();
+    } else if (this.state.currentSource === "youtube") {
+
     }
 
     if (source === "soundcloud") {
@@ -104,15 +106,21 @@ var App = React.createClass({
     } else if (source === "youtube") {
       this.setState({playYoutube: [songName, songId, source], currentSource: "youtube"});
 
-      this.player = new YT.Player('player', {
-        height: '390',
-        width: '640',
-        videoId: songId
-      });
-      setTimeout(function () {
-        console.log($(".video-stream"));
-        debugger
-      }, 2000);
+      if (this.player) {
+        setTimeout(function () {
+          this.player.loadVideoById(this.state.playYoutube[1])
+        }.bind(this), 100);
+      } else {
+        this.player = new YT.Player('player', {
+          height: '390',
+          width: '640',
+          videoId: songId
+        });
+        setTimeout(function () {
+          this.player.loadVideoById(this.state.playYoutube[1])
+        }.bind(this), 1000);
+      }
+
     }
     this.setState({currentSong: songName});
   },
