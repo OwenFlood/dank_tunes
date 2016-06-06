@@ -17,6 +17,13 @@ Rails.application.routes.draw do
   resources :soundcloud, only: :index
   get "player" => "soundcloud#player"
 
+  resources :playlists
+
+  resources :users, only: [:new, :create]
+  resources :sessions, only: [:new, :create] do
+    delete :destroy, on: :collection
+  end
+
   # Example resource route with options:
   #   resources :products do
   #     member do

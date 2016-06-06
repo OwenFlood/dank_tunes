@@ -1,6 +1,6 @@
 var App = React.createClass({
   getInitialState: function() {
-    return {songs: this.props.songs, currentSong: "", currentSource: "", playerVariable: null, fetched: false, playYoutube: []}
+    return {songs: this.props.songs, playing: false, currentSong: "", currentSource: "", playerVariable: null, fetched: false, playYoutube: []}
   },
   parseSoundCloud: function(songs) {
     soundCloudSongs = []
@@ -92,7 +92,6 @@ var App = React.createClass({
   },
   playMe: function(event, songName, songId, source) {
     event.preventDefault();
-    scPlayer
 
     if (this.state.currentSource === "soundcloud") {
       this.state.playerVariable.stop();
@@ -103,20 +102,31 @@ var App = React.createClass({
       this.setState({currentSource: "soundcloud", playerVariable: scPlayer});
       scPlayer.play({streamUrl: 'https://api.soundcloud.com/tracks/' + songId + '/stream'});
     } else if (source === "youtube") {
-      this.setState({playYoutube: [songName, songId, source], currentSource: "youtube"}, function() {
-        $(".ytp-large-play-button").click();
-      });
+        this.setState({playYoutube: [songName, songId, source], currentSource: "youtube"});
+        setTimeout(function () {
+          $(".ytp-large-play-button").click()
+        }, 1000);
     }
     this.setState({currentSong: songName});
   },
+  handlePlayPause: function() {
+    if (this.state.currentSource === "soundcloud") {
+      var player = this.state.playerVariable
+    }
+  },
+  logIn: function() {
+
+  },
   render: function() {
     return <div className="container">
+            <UserHandler logIn={this.logIn} user={this.props.current_user} />
+            <hr />
             <h1>Sweet Berry Wine</h1>
             <SearchBar onSearch={this.searchFilter} />
             <EmbedYoutube song={this.state.playYoutube}/>
             <h3>Now Playing:</h3>
             <SongList playMe={this.playMe} songs={this.state.songs} />
-            <NowPlaying currentSong={this.state.currentSong}/>
+            <NowPlaying handlePlayPause={this.handlePlayPause} currentSong={this.state.currentSong}/>
            </div>
   }
 });
