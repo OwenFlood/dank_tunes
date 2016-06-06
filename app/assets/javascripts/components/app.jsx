@@ -1,6 +1,6 @@
 var App = React.createClass({
   getInitialState: function() {
-    return {songs: this.props.songs, playing: false, currentSong: "", currentSource: "", playerVariable: null, fetched: false, playYoutube: []}
+    return {songs: [], playing: false, currentSong: "", currentSource: "", playerVariable: null, fetched: false, playYoutube: []}
   },
   parseSoundCloud: function(songs) {
     soundCloudSongs = []
@@ -78,7 +78,7 @@ var App = React.createClass({
     $.ajax({
       method: "GET",
       url: "https://www.googleapis.com/youtube/v3/search",
-      data: {part: "id, snippet", q: $("#search-term").val(), key: "AIzaSyCgc_LxS73WKGeyFplInVMxuCR332dbOls"},
+      data: {part: "id, snippet", q: $("#search-term").val(), type: "video",key: "AIzaSyCgc_LxS73WKGeyFplInVMxuCR332dbOls"},
       success: function(data) {
         console.log(data);
         this.parseYouTube(data).then(function (youtubeSongs) {
@@ -102,10 +102,17 @@ var App = React.createClass({
       this.setState({currentSource: "soundcloud", playerVariable: scPlayer});
       scPlayer.play({streamUrl: 'https://api.soundcloud.com/tracks/' + songId + '/stream'});
     } else if (source === "youtube") {
-        this.setState({playYoutube: [songName, songId, source], currentSource: "youtube"});
-        setTimeout(function () {
-          $(".ytp-large-play-button").click()
-        }, 1000);
+      this.setState({playYoutube: [songName, songId, source], currentSource: "youtube"});
+
+      this.player = new YT.Player('player', {
+        height: '390',
+        width: '640',
+        videoId: songId
+      });
+      setTimeout(function () {
+        console.log($(".video-stream"));
+        debugger
+      }, 2000);
     }
     this.setState({currentSong: songName});
   },
@@ -118,10 +125,11 @@ var App = React.createClass({
       this.setState({playing: false, playYoutube: [], currentSource: "", currentSong: ""});
     }
   },
+  renderYoutube: function() {
+
+  },
   render: function() {
     return <div className="container">
-            <UserHandler logIn={this.logIn} user={this.props.current_user} />
-            <hr />
             <h1>Sweet Berry Wine</h1>
             <SearchBar onSearch={this.searchFilter} />
             <EmbedYoutube song={this.state.playYoutube}/>
