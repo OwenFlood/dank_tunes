@@ -112,10 +112,11 @@ var App = React.createClass({
   handlePlayPause: function() {
     if (this.state.currentSource === "soundcloud") {
       var player = this.state.playerVariable
+      player.pause();
+      this.setState({playing: false, currentSource: "", currentSong: ""});
+    } else if (this.state.currentSource === "youtube") {
+      this.setState({playing: false, playYoutube: [], currentSource: "", currentSong: ""});
     }
-  },
-  logIn: function() {
-
   },
   render: function() {
     return <div className="container">
