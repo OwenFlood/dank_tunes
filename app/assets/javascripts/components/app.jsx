@@ -139,11 +139,17 @@ var App = React.createClass({
   render: function() {
     return <div className="container">
             <h1>Sweet Berry Wine</h1>
-            <SearchBar onSearch={this.searchFilter} />
-            <EmbedYoutube song={this.state.playYoutube}/>
+            <SearchBar
+              onSearch={this.searchFilter} />
+            <EmbedYoutube
+              song={this.state.playYoutube}/>
             <h3>Now Playing:</h3>
-            <SongList playMe={this.playMe} songs={this.state.songs} />
-            <NowPlaying handlePlayPause={this.handlePlayPause} currentSong={this.state.currentSong}/>
+            <SongList
+              playMe={this.playMe}
+              songs={this.state.songs} />
+            <NowPlaying
+              handlePlayPause={this.handlePlayPause}
+              currentSong={this.state.currentSong} />
            </div>
   }
 });
