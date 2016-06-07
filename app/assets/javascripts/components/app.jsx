@@ -65,7 +65,7 @@ var App = React.createClass({
       url: "http://api.soundcloud.com/tracks.json",
       data: {client_id: "4346c8125f4f5c40ad666bacd8e96498", q: $("#search-term").val(), limit: "100", order: "hotness"},
       success: function(data) {
-
+        console.log(data);
         this.setState({ songs: this.state.songs.concat(this.parseSoundCloud(data)) });
 
       }.bind(this),
@@ -96,7 +96,7 @@ var App = React.createClass({
     if (this.state.currentSource === "soundcloud") {
       this.state.playerVariable.stop();
     } else if (this.state.currentSource === "youtube") {
-
+      // this.state.playerVariable.stopVideo();
     }
 
     if (source === "soundcloud") {
@@ -116,6 +116,7 @@ var App = React.createClass({
           width: '640',
           videoId: songId
         });
+        this.setState({playerVariable: this.player});
         setTimeout(function () {
           this.player.loadVideoById(this.state.playYoutube[1])
         }.bind(this), 1000);
@@ -144,6 +145,10 @@ var App = React.createClass({
             <h3>Now Playing:</h3>
             <SongList playMe={this.playMe} songs={this.state.songs} />
             <NowPlaying handlePlayPause={this.handlePlayPause} currentSong={this.state.currentSong}/>
+            <PlaylistSideBar playlists={this.props.playlists}/>
            </div>
   }
 });
+
+// For Creating a playlist song:
+// PlaylistSong.create(song_host: "soundcloud", song_id: 180729095, song_name: "Vanic X K.Flay - Make Me Fade", song_artist: "VANIC Official", thumbnail_link: "https://i1.sndcdn.com/artworks-000155718375-l5hg9e-large.jpg", popularity: 13947102, playlist_id: 1)

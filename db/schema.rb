@@ -11,17 +11,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160606022257) do
+ActiveRecord::Schema.define(version: 20160607165946) do
 
-  create_table "playlists", force: :cascade do |t|
-    t.string   "host"
-    t.integer  "sond_id"
+  create_table "playlist_songs", force: :cascade do |t|
+    t.string   "song_host"
+    t.integer  "song_id"
     t.string   "song_name"
-    t.string   "aong_artist"
+    t.string   "song_artist"
     t.string   "thumbnail_link"
-    t.integer  "user_id"
+    t.integer  "popularity"
+    t.integer  "playlist_id"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+  end
+
+  add_index "playlist_songs", ["playlist_id"], name: "index_playlist_songs_on_playlist_id"
+
+  create_table "playlists", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_index "playlists", ["user_id"], name: "index_playlists_on_user_id"

@@ -10,6 +10,38 @@ iframe {
   display: none;
 }
 
+.playlist-sidebar {
+  position: fixed;
+  top: 0px;
+  bottom: 0px;
+  right: 0px;
+  z-index: 1000;
+  // display: flex;
+  padding: 20px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: #f5f5f5;
+  border-right: 1px solid #eee;
+  border-left: 2px solid darkgrey;
+  // justify-content: center;
+
+  .playlist-header {
+    font-size: 24px;
+    font-weight: bold;
+    width: 100%;
+  }
+
+  .new-playlist-item {
+    display: flex;
+    justify-content: center;
+  }
+
+  .playlist-list-item {
+    display: flex;
+    justify-content: center;
+  }
+}
+
 // MAKE SURE TO ADD ALL THE BELOW INTO THIS CUSTOM-ICON CLASS
 .custom-icons {
   margin-left: 10px;

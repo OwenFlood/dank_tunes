@@ -8,6 +8,6 @@
 <% end %>
 <hr>
 
-<%= react_component "App", {songs: @tracks, current_user: current_user} %>
+<%= react_component "App", {songs: @tracks, current_user: current_user, playlists: @playlists} %>
 
 <script src="https://connect.soundcloud.com/sdk/sdk-3.1.1.js"></script>
