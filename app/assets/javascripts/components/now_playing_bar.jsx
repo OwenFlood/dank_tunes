@@ -68,7 +68,7 @@ var NowPlaying = React.createClass({
              </a>
              <span className="h4">Now Playing: </span>{this.props.currentSong}
              <div className='col-xs-4'>
-               <Chart data={this.state.chartData} />
+               <SongChart data={this.state.chartData} />
              </div>
            </div>
   }

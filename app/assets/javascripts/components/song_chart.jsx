@@ -1,12 +1,12 @@
-var Chart = React.createClass({
+var SongChart = React.createClass({
 
-  displayName: 'Chart',
+  displayName: 'SongChart',
 
   propTypes: function() {
     data: React.PropTypes.object.isRequired
   },
 
-  myChartRef: function(ref) {
+  myChart: function(ref) {
     var ctx = ReactDOM.findDOMNode(ref)
     var myChart = new Chart(ctx, {
       type: 'line',
@@ -24,6 +24,6 @@ var Chart = React.createClass({
   },
 
   render: function() {
-    return <canvas ref={this.myChartRef} width="200" height="200"></canvas>
+    return <canvas ref={this.myChart} width="200" height="200"></canvas>
   }
 });
