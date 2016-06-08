@@ -17,7 +17,9 @@ Rails.application.routes.draw do
   resources :soundcloud, only: :index
   get "player" => "soundcloud#player"
 
-  resources :playlists
+  resources :playlists do
+    resources :playlist_songs, only: [:create]
+  end
 
   resources :users, only: [:new, :create]
   resources :sessions, only: [:new, :create] do

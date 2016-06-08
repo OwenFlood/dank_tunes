@@ -1,6 +1,6 @@
 class PlaylistSongsController < ApplicationController
   def create
-    @playlist_song = Playlist.new(params.require(:playlist_song).permit([:song_host, :song_id, :song_name, :song_artist, :thumbnail_link, :popularity, :playlist_id]))
+    @playlist_song = PlaylistSong.new(params.require(:playlist_song).permit([:song_host, :song_id, :song_name, :song_artist, :thumbnail_link, :popularity, :playlist_id]))
 
     if @playlist_song.save
       respond_to do |format|

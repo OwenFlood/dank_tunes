@@ -73,7 +73,7 @@ var PlaylistSideBar = React.createClass({
   goBack: function(event) {
     event.preventDefault();
     this.setState({playlistView: "allPlaylists"});
-    this.props.togglePlaylist;
+    this.props.togglePlaylist();
   },
   render: function() {
     console.log(this.props.playlists);
