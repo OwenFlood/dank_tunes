@@ -10,6 +10,28 @@ iframe {
   display: none;
 }
 
+.song-result {
+  margin-left: 30px;
+}
+
+.song-search-bar {
+  margin-bottom: 20px;
+}
+
+.song-title {
+  margin-left: 20px;
+}
+
+.playlist-trash {
+  margin-left: 50px;
+  color: black;
+}
+
+.playlist-trash:hover {
+  margin-left: 50px;
+  color: black;
+}
+
 .playlist-sidebar {
   position: fixed;
   top: 0px;
@@ -137,7 +159,25 @@ iframe {
 }
 
 .play-bar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  .song-manipulation {
+    display: inline-block;
+    margin-left: 44%;
+    margin-right: 40%;
+    vertical-align: middle;
+    padding-top: 1%;
+  }
+
+  .playlist-hamburger {
+    padding-top: 1%;
+    float: right;
+
+    .open-playlist {
+      font-size: 25px;
+    }
+  }
+}
+
+.no-results {
+  padding-left: 30px;
+  margin-top: 20px;
 }

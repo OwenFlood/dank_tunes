@@ -22,6 +22,20 @@ var PlaylistSideBar = React.createClass({
       }
     });
   },
+  deletePlaylist: function() {
+    $.ajax({
+      method: "DELETE",
+      url: "http://localhost:3000/playlists/" + this.state.activePlayList.id,
+      beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+      success: function() {
+        console.log("DELETED");
+      },
+      error: function(error) {
+        console.log(error);
+      }
+    });
+    this.setState({activePlayList: null, playlistView: "allPlaylists"});
+  },
   addPlaylist: function() {
     if (this.state.newPlaylistItem === "add") {
       this.setState({newPlaylistItem: "form"});
@@ -77,7 +91,9 @@ var PlaylistSideBar = React.createClass({
   },
   render: function() {
     console.log(this.props.playlists);
-    if (this.state.playlistView === "allPlaylists") {
+    if (!this.props.showing) {
+      return <div></div>
+    } else if (this.state.playlistView === "allPlaylists") {
       return  <div className="col-sm-1 col-md-3 playlist-sidebar">
                 <div className="playlist-header">My Playlists</div>
                 <br />
@@ -96,6 +112,7 @@ var PlaylistSideBar = React.createClass({
                 <div className="playlist-header">
                   <a href="#" onClick={this.goBack}><i className="fa fa-chevron-left custom-icons" aria-hidden="true" /></a>
                   <span className="playlist-title">{this.state.activePlayList.name}</span>
+                  <a href="#" onClick={this.deletePlaylist}><i className="fa fa-trash custom-icon playlist-trash" aria-hidden="true" /></a>
                 </div>
                 <br />
                 <Playlist songs={this.state.activePlayList.playlist_songs} playMe={this.props.playMe}/>

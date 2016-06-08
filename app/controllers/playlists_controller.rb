@@ -15,4 +15,14 @@ class PlaylistsController < ApplicationController
       flash.now[:alert] = "Unable to create playlist"
     end
   end
+
+  def destroy
+    playlist = Playlist.find params[:id]
+    if playlist.destroy
+      puts "Destroyed"
+      render nothing: true
+    else
+      puts "Cant destroy"
+    end
+  end
 end
