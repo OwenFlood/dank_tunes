@@ -43,8 +43,7 @@ var PlaylistSideBar = React.createClass({
     }
   },
   playlistDetails: function(playlist, ___, __, event) {
-    console.log("Wat");
-    this.props.togglePlaylist();
+    this.props.togglePlaylist(playlist);
     this.setState({activePlayList: playlist, playlistView: "specificPlaylist"});
   },
   renderPlaylists: function() {

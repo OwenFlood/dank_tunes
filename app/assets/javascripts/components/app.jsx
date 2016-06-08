@@ -1,6 +1,6 @@
 var App = React.createClass({
   getInitialState: function() {
-    return {songs: [], addable: false , playing: false, currentSong: "", currentSource: "", playerVariable: null, fetched: false, playYoutube: []}
+    return {songs: [], addable: false , playing: false, currentSong: "", currentSource: "", currentPlaylist: null, playerVariable: null, fetched: false, playYoutube: []}
   },
   parseSoundCloud: function(songs) {
     soundCloudSongs = []
@@ -135,17 +135,23 @@ var App = React.createClass({
       this.setState({playing: false, playYoutube: [], currentSource: "", currentSong: ""});
     }
   },
-  renderYoutube: function() {
+  addToPlaylist: function(name, songId, source, author, thumbnail, popularity) {
+    debugger
+    // You have access to this.props.currentPlaylist!!!
+    $.ajax({
+      method: "POST",
+      url: "",
 
+    });
   },
-  togglePlaylist: function() {
+  togglePlaylist: function(playlist) {
     console.log("Toggling");
     if (this.state.addable) {
       console.log("Set to false");
-      this.setState({addable: false})
+      this.setState({addable: false, currentPlaylist: null})
     } else {
       console.log("Set to true");
-      this.setState({addable: true});
+      this.setState({addable: true, currentPlaylist: playlist});
     }
   },
   render: function() {
@@ -154,7 +160,7 @@ var App = React.createClass({
             <SearchBar onSearch={this.searchFilter} />
             <EmbedYoutube song={this.state.playYoutube}/>
             <h3>Now Playing:</h3>
-            <SongList addable={this.state.addable} playMe={this.playMe} songs={this.state.songs} />
+            <SongList addToPlaylist={this.addToPlaylist} addable={this.state.addable} playMe={this.playMe} songs={this.state.songs} />
             <NowPlaying handlePlayPause={this.handlePlayPause} currentSong={this.state.currentSong}/>
             <PlaylistSideBar togglePlaylist={this.togglePlaylist} playlists={this.props.playlists} playMe={this.playMe} />
            </div>
