@@ -1,6 +1,6 @@
 <hr>
 <% if user_signed_in? %>
-  Hello <%= current_user.first_name %>,
+  Hello <%= current_user.first_name.capitalize %>,
   <%= link_to "Logout", sessions_path, method: :delete, data: {confirm: "are you sure you want to log out?"} %>
 <% else %>
   <%= link_to "Login", new_session_path %> |

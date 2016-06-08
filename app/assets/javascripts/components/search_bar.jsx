@@ -1,7 +1,9 @@
 var SearchBar = React.createClass({
   render: function() {
-    return <form onSubmit={this.props.onSearch}>
-             <input id="search-term" type="text" name="music-search-box" />
-           </form>
+    return <div className="col-md-12 song-search-bar">
+             <form className="col-md-3" onSubmit={this.props.onSearch}>
+               <input className="form-control" placeholder="search for a song" id="search-term" type="text" name="music-search-box" />
+             </form>
+           </div>
   }
 });
