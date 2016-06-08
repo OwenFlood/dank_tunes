@@ -43,6 +43,8 @@ var PlaylistSideBar = React.createClass({
     }
   },
   playlistDetails: function(playlist, ___, __, event) {
+    console.log("Wat");
+    this.props.togglePlaylist;
     this.setState({activePlayList: playlist, playlistView: "specificPlaylist"});
   },
   renderPlaylists: function() {
@@ -69,8 +71,10 @@ var PlaylistSideBar = React.createClass({
               </a>
     });
   },
-  goBack: function() {
-    this.setState({playlistView: "allPlaylists"})
+  goBack: function(event) {
+    event.preventDefault();
+    this.setState({playlistView: "allPlaylists"});
+    this.props.togglePlaylist;
   },
   render: function() {
     console.log(this.props.playlists);
@@ -84,6 +88,7 @@ var PlaylistSideBar = React.createClass({
                       {this.newPlaylistItem()}
                     </a>
                     {this.state.allPlaylists}
+                    {/*<PlaylistList playlistDetails={this.playlistDetails} playlists={this.props.playlists}/>*/}
                   </div>
                 </div>
               </div>

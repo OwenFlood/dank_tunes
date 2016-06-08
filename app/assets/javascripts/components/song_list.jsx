@@ -25,11 +25,19 @@ var Song = React.createClass({
   },
   render: function() {
     // var playMe = this.props.playMe.bind(null, {this.props.songName})
-    return <div>
-              <img src={this.imageFilter()} class="song-thumbnail" />
-              <span className="h4"><a href="#" onClick={this.handleClick}>{this.props.songName}</a></span> - {this.props.author} <span className="h4">Source: </span> {this.props.source} <span className="h4">Popularity: </span> {this.props.popularity}
-              <a href="#"><i className="fa fa-plus-square" aria-hidden="true"></i></a>
-              <hr />
-           </div>
+    if (this.props.addable) {
+      return <div>
+                <img src={this.imageFilter()} class="song-thumbnail" />
+                <span className="h4"><a href="#" onClick={this.handleClick}>{this.props.songName}</a></span> - {this.props.author} <span className="h4">Source: </span> {this.props.source} <span className="h4">Popularity: </span> {this.props.popularity}
+                <a href="#"><i onClick={this.addSong} className="fa fa-plus-square" aria-hidden="true"></i></a>
+                <hr />
+             </div>
+    } else {
+      return <div>
+                <img src={this.imageFilter()} class="song-thumbnail" />
+                <span className="h4"><a href="#" onClick={this.handleClick}>{this.props.songName}</a></span> - {this.props.author} <span className="h4">Source: </span> {this.props.source} <span className="h4">Popularity: </span> {this.props.popularity}
+                <hr />
+             </div>
+    }
   }
 });

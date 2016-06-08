@@ -1,6 +1,6 @@
 var App = React.createClass({
   getInitialState: function() {
-    return {songs: [], playing: false, currentSong: "", currentSource: "", playerVariable: null, fetched: false, playYoutube: []}
+    return {songs: [], addable: false , playing: false, currentSong: "", currentSource: "", playerVariable: null, fetched: false, playYoutube: []}
   },
   parseSoundCloud: function(songs) {
     soundCloudSongs = []
@@ -92,7 +92,7 @@ var App = React.createClass({
   },
   playMe: function(event, songName, songId, source) {
     event.preventDefault();
-    
+
 
     if (this.state.currentSource === "soundcloud") {
       this.state.playerVariable.stop();
@@ -138,15 +138,25 @@ var App = React.createClass({
   renderYoutube: function() {
 
   },
+  togglePlaylist: function() {
+    console.log("Toggling");
+    if (this.state.addable) {
+      console.log("Set to false");
+      this.setState({addable: false})
+    } else {
+      console.log("Set to true");
+      this.setState({addable: true});
+    }
+  },
   render: function() {
     return <div className="container">
             <h1>Sweet Berry Wine</h1>
             <SearchBar onSearch={this.searchFilter} />
             <EmbedYoutube song={this.state.playYoutube}/>
             <h3>Now Playing:</h3>
-            <SongList playMe={this.playMe} songs={this.state.songs} />
+            <SongList addable={this.state.addable} playMe={this.playMe} songs={this.state.songs} />
             <NowPlaying handlePlayPause={this.handlePlayPause} currentSong={this.state.currentSong}/>
-            <PlaylistSideBar playlists={this.props.playlists} playMe={this.playMe} />
+            <PlaylistSideBar togglePlaylist={this.togglePlaylist} playlists={this.props.playlists} playMe={this.playMe} />
            </div>
   }
 });
