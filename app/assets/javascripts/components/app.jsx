@@ -150,20 +150,17 @@ var App = React.createClass({
         "playlist_song[playlist_id]": this.state.currentPlaylist.id,
       },
       success: function() {
-        console.log("WE DID IT BOYS");
+        console.log("Song successfully added");
       },
       error: function() {
-        console.log("RIP");
+        console.log("Song was unable to add");
       }
     });
   },
   togglePlaylist: function(playlist) {
-    console.log("Toggling");
     if (this.state.addable) {
-      console.log("Set to false");
       this.setState({addable: false, currentPlaylist: null})
     } else {
-      console.log("Set to true");
       this.setState({addable: true, currentPlaylist: playlist});
     }
   },
