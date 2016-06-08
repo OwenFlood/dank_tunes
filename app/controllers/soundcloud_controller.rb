@@ -1,7 +1,7 @@
 class SoundcloudController < ApplicationController
   def index
     if user_signed_in?
-      @playlists = Playlist.where(user_id: current_user.id)
+      @playlists = current_user.playlists.as_json(include: :playlist_songs)
     end
   end
 
