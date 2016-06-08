@@ -12,7 +12,7 @@ class PlaylistsController < ApplicationController
         format.json { render json: @playlist }
       end
     else
-      flash.now[:alert] = "Unable to creat playlist"
+      flash.now[:alert] = "Unable to create playlist"
     end
   end
 end

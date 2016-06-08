@@ -2,7 +2,7 @@ var SongList = React.createClass({
   render: function() {
     if (this.props.songs.length > 0) {
       var allSongs = this.props.songs.map(function(song, index){
-        return <Song addable={this.props.addable} class="song-list" playMe={this.props.playMe} imageLink={song.thumbnailLink} songName={song.songName} songId={song.songId} author={song.author} source={song.source} key={index} popularity={song.popularity} />
+        return <Song addToPlaylist={this.props.addToPlaylist} addable={this.props.addable} class="song-list" playMe={this.props.playMe} imageLink={song.thumbnailLink} songName={song.songName} songId={song.songId} author={song.author} source={song.source} key={index} popularity={song.popularity} />
       }.bind(this));
 
       return <div>{allSongs}</div>
@@ -23,9 +23,11 @@ var Song = React.createClass({
   handleClick: function(event) {
     this.props.playMe(event, this.props.songName, this.props.songId, this.props.source)
   },
+  addSong: function(event) {
+    event.preventDefault();
+    this.props.addToPlaylist(this.props.songName, this.props.songId, this.props.source, this.props.author, this.props.imageLink, this.props.popularity);
+  },
   render: function() {
-    // var playMe = this.props.playMe.bind(null, {this.props.songName})
-    console.log("wat " + this.props.addable);
     if (this.props.addable) {
       return <div>
                 <img src={this.imageFilter()} class="song-thumbnail" />
