@@ -136,12 +136,25 @@ var App = React.createClass({
     }
   },
   addToPlaylist: function(name, songId, source, author, thumbnail, popularity) {
-    debugger
-    // You have access to this.props.currentPlaylist!!!
     $.ajax({
       method: "POST",
-      url: "",
-
+      url: "http://localhost:3000/playlists/:playlist_id/playlist_songs",
+      beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+      data: {
+        "playlist_song[song_host]": source,
+        "playlist_song[song_id]": songId,
+        "playlist_song[song_name]": name,
+        "playlist_song[song_artist]": author,
+        "playlist_song[thumbnail_link]": thumbnail,
+        "playlist_song[popularity]": popularity,
+        "playlist_song[playlist_id]": this.state.currentPlaylist.id,
+      },
+      success: function() {
+        console.log("WE DID IT BOYS");
+      },
+      error: function() {
+        console.log("RIP");
+      }
     });
   },
   togglePlaylist: function(playlist) {
