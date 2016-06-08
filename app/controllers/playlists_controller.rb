@@ -8,7 +8,9 @@ class PlaylistsController < ApplicationController
     @playlist.user = current_user
 
     if @playlist.save
-      flash[:notice] = "Playlist created!"
+      respond_to do |format|
+        format.json { render json: @playlist }
+      end
     else
       flash.now[:alert] = "Unable to creat playlist"
     end

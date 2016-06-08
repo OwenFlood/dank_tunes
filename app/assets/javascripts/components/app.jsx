@@ -92,6 +92,7 @@ var App = React.createClass({
   },
   playMe: function(event, songName, songId, source) {
     event.preventDefault();
+    
 
     if (this.state.currentSource === "soundcloud") {
       this.state.playerVariable.stop();
@@ -145,7 +146,7 @@ var App = React.createClass({
             <h3>Now Playing:</h3>
             <SongList playMe={this.playMe} songs={this.state.songs} />
             <NowPlaying handlePlayPause={this.handlePlayPause} currentSong={this.state.currentSong}/>
-            <PlaylistSideBar playlists={this.props.playlists}/>
+            <PlaylistSideBar playlists={this.props.playlists} playMe={this.playMe} />
            </div>
   }
 });
