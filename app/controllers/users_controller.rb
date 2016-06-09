@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   def new
     @user = User.new
   end
-  
+
   def create
     @user = User.new user_params
     if @user.save
@@ -11,6 +11,10 @@ class UsersController < ApplicationController
     else
       render :new
     end
+  end
+
+  def playlists
+    render json: current_user.playlists.as_json(include: :playlist_songs), status: :ok
   end
 
   private

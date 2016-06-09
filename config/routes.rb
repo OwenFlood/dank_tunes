@@ -21,7 +21,9 @@ Rails.application.routes.draw do
     resources :playlist_songs, only: [:create]
   end
 
-  resources :users, only: [:new, :create]
+  resources :users, only: [:new, :create] do
+    get "playlists" => "users#playlists"
+  end
   resources :sessions, only: [:new, :create] do
     delete :destroy, on: :collection
   end
