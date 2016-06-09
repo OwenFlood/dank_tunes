@@ -197,7 +197,7 @@ var App = React.createClass({
             <EmbedYoutube song={this.state.playYoutube}/>
             <SongList addToPlaylist={this.addToPlaylist} addable={this.state.addable} playMe={this.playMe} songs={this.state.songs} />
             <NowPlaying togglePlaylistBar={this.togglePlaylistBar} handlePlayPause={this.handlePlayPause} currentSong={this.state.currentSong}/>
-            <PlaylistSideBar showing={this.state.showing} togglePlaylist={this.togglePlaylist} playlists={this.state.playlists} playMe={this.playMe} />
+            <Playlists showing={this.state.showing} togglePlaylist={this.togglePlaylist} playlists={this.state.playlists} playMe={this.playMe} />
            </div>
   }
 });
