@@ -35,13 +35,22 @@ var Song = React.createClass({
     if (this.props.addable) {
       var addSong = <a href="#"><i onClick={this.addSong} className="fa fa-plus-square" aria-hidden="true"></i></a>
     }
+    if (this.props.source === 'soundcloud') {
+      var sourceClass = 'source-soundcloud'
+      var sourceName = 'SoundCloud'
+    } else {
+      var sourceClass = 'source-youtube'
+      var sourceName = 'YouTube'
+    }
     return <div className="song-container panel panel-default">
              <div className="panel-body">
                <div className="song-result row">
                  <div className='col-xs-2'><img src={this.imageFilter()} className="song-thumbnail" /></div>
                  <div className='col-xs-10'>
                    <div className='row'>
-                     <div className='song-info col-xs-12'>{this.props.author} &mdash; Popularity: {this.props.popularity}</div>
+                     <div className='song-info col-xs-12'>{this.props.author} &mdash; Popularity: {this.props.popularity}
+                      <span className={sourceClass}>{sourceName}</span>
+                     </div>
                      <div className="song-title col-xs-12"><a href="#" onClick={this.handleClick}>{this.props.songName}</a>{addSong}</div>
                    </div>
                  </div>
