@@ -1,6 +1,11 @@
 var PlaylistSideBar = React.createClass({
   getInitialState: function() {
-    return {playlists: this.props.playlists, activePlayList: {}, allPlaylists: [], newPlaylistItem: "add", playlistView: "allPlaylists", playlistData: []}
+    return {
+      activePlayList: {},
+      allPlaylists: [],
+      newPlaylistItem: "add",
+      playlistView: "allPlaylists",
+      playlistData: []}
   },
   componentDidMount: function() {
     this.renderPlaylists();
@@ -62,7 +67,7 @@ var PlaylistSideBar = React.createClass({
   },
   renderPlaylists: function() {
     this.setState({allPlaylists:
-      this.state.playlists.map(function(playlist, index){
+      this.props.playlists.map(function(playlist, index){
         var boundPlaylistDetails = this.playlistDetails.bind(this, playlist)
         return (
           <a
