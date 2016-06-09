@@ -33,18 +33,21 @@ var Song = React.createClass({
   },
   render: function() {
     if (this.props.addable) {
-      return <div className="song-result">
-                <img src={this.imageFilter()} className="song-thumbnail" />
-                <span className="h4 song-title"><a href="#" onClick={this.handleClick}>{this.props.songName}</a></span> - {this.props.author} <span className="h4">Source: </span> {this.props.source} <span className="h4">Popularity: </span> {this.props.popularity}
-                <a href="#"><i onClick={this.addSong} className="fa fa-plus-square" aria-hidden="true"></i></a>
-                <hr />
-             </div>
-    } else {
-      return <div className="song-result">
-                <img src={this.imageFilter()} className="song-thumbnail" />
-                <span className="h4 song-title"><a href="#" onClick={this.handleClick}>{this.props.songName}</a></span> - {this.props.author} <span className="h4">Source: </span> {this.props.source} <span className="h4">Popularity: </span> {this.props.popularity}
-                <hr />
-             </div>
+      var addSong = <a href="#"><i onClick={this.addSong} className="fa fa-plus-square" aria-hidden="true"></i></a>
     }
+    return <div className="song-container panel panel-default">
+             <div className="panel-body">
+               <div className="song-result row">
+                 <div className='col-xs-2'><img src={this.imageFilter()} className="song-thumbnail" /></div>
+                 <div className='col-xs-10'>
+                   <div className='row'>
+                     <div className='song-info col-xs-12'>{this.props.author} &mdash; Popularity: {this.props.popularity}</div>
+                     <div className="song-title col-xs-12"><a href="#" onClick={this.handleClick}>{this.props.songName}</a>{addSong}</div>
+                   </div>
+                 </div>
+               </div>
+             </div>
+           </div>
   }
 });
+{/*<span className="h4">Source: </span> {this.props.source}*/}

@@ -172,7 +172,13 @@ var App = React.createClass({
     }
   },
   render: function() {
-    return <div className="container">
+    if (this.state.showing) {
+      var containerClasses = 'container col-sm-11 col-md-9'
+    } else {
+      var containerClasses = 'container'
+    }
+    return <div className={containerClasses}>
+            <h2 className='app-title'>Enjoy the dankest of tunes...</h2>      
             <SearchBar onSearch={this.searchFilter} /> <br /> <br />
             <EmbedYoutube song={this.state.playYoutube}/>
             <SongList addToPlaylist={this.addToPlaylist} addable={this.state.addable} playMe={this.playMe} songs={this.state.songs} />

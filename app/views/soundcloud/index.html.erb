@@ -1,15 +1,12 @@
-<hr>
-<div class="">
-  <% if user_signed_in? %>
+<div>
+  <!-- <% if user_signed_in? %>
   Hello <%= current_user.first_name.capitalize %>,
   <%= link_to "Logout", sessions_path, method: :delete, data: {confirm: "are you sure you want to log out?"} %>
-  <% else %>
+  <% else %> -->
   <%= link_to "Login", new_session_path %> |
   <%= link_to "Sign Up", new_user_path %>
-  <% end %>
+  <!-- <% end %> -->
 </div>
-<span class="h1">Dank Tunes</span>
-<hr>
 
 <%= react_component "App", {songs: @tracks, current_user: current_user, playlists: @playlists} %>
 
