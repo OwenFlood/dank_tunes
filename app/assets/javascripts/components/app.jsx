@@ -63,7 +63,7 @@ var App = React.createClass({
     $.ajax({
       method: "GET",
       url: "http://api.soundcloud.com/tracks.json",
-      data: {client_id: "4346c8125f4f5c40ad666bacd8e96498", q: $("#search-term").val(), limit: "40", order: "hotness"},
+      data: {client_id: "4346c8125f4f5c40ad666bacd8e96498", q: $("#search-term").val(), limit: "20", order: "hotness"},
       success: function(data) {
         console.log(data);
         this.setState({ songs: this.state.songs.concat(this.parseSoundCloud(data)) });
@@ -117,7 +117,7 @@ var App = React.createClass({
 
       if (this.player) {
         setTimeout(function () {
-          this.player.loadVideoById(this.state.playYoutube[1])
+          this.player.loadVideoById(this.state.playYoutube[1]);
         }.bind(this), 100);
       } else {
         this.player = new YT.Player('player', {
@@ -127,10 +127,9 @@ var App = React.createClass({
         });
         this.setState({playerVariable: this.player});
         setTimeout(function () {
-          this.player.loadVideoById(this.state.playYoutube[1])
+          this.player.loadVideoById(this.state.playYoutube[1]);
         }.bind(this), 1000);
       }
-
     }
     this.setState({currentSong: songName});
   },
@@ -140,6 +139,7 @@ var App = React.createClass({
       player.pause();
       this.setState({playing: false, currentSource: "", currentSong: ""});
     } else if (this.state.currentSource === "youtube") {
+      console.log("Hello World");
       this.setState({playing: false, playYoutube: [], currentSource: "", currentSong: ""});
     }
   },
@@ -202,10 +202,10 @@ var App = React.createClass({
     return <div className={containerClasses}>
             <h2 className='app-title'>Enjoy the dankest of tunes...</h2>
             <SearchBar onSearch={this.searchFilter} /> <br /> <br />
-            <EmbedYoutube song={this.state.playYoutube}/>
+            <EmbedYoutube song={this.state.playYoutube} />
             <SongList addToPlaylist={this.addToPlaylist} addable={this.state.addable} playMe={this.playMe} songs={this.state.songs} />
-            <NowPlaying togglePlaylistBar={this.togglePlaylistBar} handlePlayPause={this.handlePlayPause} currentSong={this.state.currentSong}/>
-            <Playlists showing={this.state.showing} togglePlaylist={this.togglePlaylist} playlists={this.state.playlists} playMe={this.playMe} updatePlaylists={this.updatePlaylists}/>
+            <NowPlaying togglePlaylistBar={this.togglePlaylistBar} handlePlayPause={this.handlePlayPause} currentSong={this.state.currentSong} />
+            <Playlists showing={this.state.showing} togglePlaylist={this.togglePlaylist} playlists={this.state.playlists} playMe={this.playMe} updatePlaylists={this.updatePlaylists} />
            </div>
   }
 });
