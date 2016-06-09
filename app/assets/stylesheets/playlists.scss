@@ -1,3 +1,41 @@
-// Place all the styles related to the playlists controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+.playlist-sidebar {
+  position: fixed;
+  top: 0px;
+  bottom: 0px;
+  right: 0px;
+  z-index: 1000;
+  padding: 20px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: white;
+  box-shadow: 0 2px 4px 0px rgba(26,27,26,0.5);
+
+  .playlist-header {
+    font-size: 24px;
+    font-weight: bold;
+    width: 100%;
+    color: rgb(104, 75, 185);
+  }
+
+  .new-playlist-item {
+    display: flex;
+    justify-content: center;
+  }
+
+  .playlist-list-item {
+    display: flex;
+    justify-content: center;
+  }
+
+  .playlist-title {
+    margin-left: 50px;
+  }
+}
+.playlist-trash {
+  margin-left: 50px;
+  color: black;
+}
+.playlist-trash:hover {
+  margin-left: 50px;
+  color: black;
+}
