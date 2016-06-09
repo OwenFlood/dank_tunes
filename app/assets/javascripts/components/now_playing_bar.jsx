@@ -10,10 +10,10 @@ var NowPlaying = React.createClass({
     }
     return <div className="navbar navbar-default navbar-fixed-bottom play-bar">
               <div>
-
+                <div className="app-brand navbar-brand pull-left">Dank Tunes</div>
                 <div className="song-manipulation">
                    {stopButton}
-                   <span className="h4">Now Playing: </span> {this.props.currentSong}
+                   {this.props.currentSong}
                 </div>
 
                 <div className="playlist-hamburger">
