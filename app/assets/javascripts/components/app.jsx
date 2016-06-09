@@ -1,6 +1,6 @@
 var App = React.createClass({
   getInitialState: function() {
-    return {songs: [], addable: false, showing: true, playing: false, currentSong: "", currentSource: "", currentPlaylist: null, playerVariable: null, fetched: false, playYoutube: []}
+    return {songs: [], addable: false, showing: true, playing: false, currentSong: "", currentSource: "", currentPlaylist: null, playerVariable: null, fetched: false, playYoutube: [], playlists: this.props.playlists}
   },
   parseSoundCloud: function(songs) {
     soundCloudSongs = []
@@ -151,11 +151,25 @@ var App = React.createClass({
       },
       success: function() {
         console.log("Song successfully added");
-      },
+        this.updatePlaylists();
+      }.bind(this),
       error: function() {
         console.log("Song was unable to add");
       }
     });
+  },
+  updatePlaylists: function () {
+    $.ajax({
+      method: 'GET',
+      url: "http://localhost:3000/users/" + this.props.current_user.id + "/playlists",
+      success: function(data) {
+        console.log(data);
+        this.setState({playlists: data})
+      }.bind(this),
+      error: function(error) {
+        console.log(error);
+      }
+    })
   },
   togglePlaylist: function(playlist) {
     if (this.state.addable) {
@@ -178,12 +192,12 @@ var App = React.createClass({
       var containerClasses = 'container'
     }
     return <div className={containerClasses}>
-            <h2 className='app-title'>Enjoy the dankest of tunes...</h2>      
+            <h2 className='app-title'>Enjoy the dankest of tunes...</h2>
             <SearchBar onSearch={this.searchFilter} /> <br /> <br />
             <EmbedYoutube song={this.state.playYoutube}/>
             <SongList addToPlaylist={this.addToPlaylist} addable={this.state.addable} playMe={this.playMe} songs={this.state.songs} />
             <NowPlaying togglePlaylistBar={this.togglePlaylistBar} handlePlayPause={this.handlePlayPause} currentSong={this.state.currentSong}/>
-            <PlaylistSideBar showing={this.state.showing} togglePlaylist={this.togglePlaylist} playlists={this.props.playlists} playMe={this.playMe} />
+            <PlaylistSideBar showing={this.state.showing} togglePlaylist={this.togglePlaylist} playlists={this.state.playlists} playMe={this.playMe} />
            </div>
   }
 });
