@@ -17,7 +17,8 @@ var Playlists = React.createClass({
       },
       success: function() {
         console.log("YAY");
-      },
+        this.props.updatePlaylists();
+      }.bind(this),
       error: function(error) {
         console.log(error);
       }
@@ -30,7 +31,8 @@ var Playlists = React.createClass({
       beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
       success: function() {
         console.log("DELETED");
-      },
+        this.props.updatePlaylists();
+      }.bind(this),
       error: function(error) {
         console.log(error);
       }
@@ -44,12 +46,18 @@ var Playlists = React.createClass({
   },
   newPlaylistItem: function() {
     if (this.state.newPlaylistItem === "add") {
-      return <span>Add New Playlist</span>
+      return <span><i className='fa fa-plus add-playlist-icon' />Add New Playlist</span>
     } else if (this.state.newPlaylistItem === "form") {
-      return <form onSubmit={this.newPlaylist}>
-               <input type="text" id="add-playlist-input" placeholder="Name Your Playlist" />
+      return <form className='add-playlist-form'  onSubmit={this.newPlaylist}>
+               <input type="text" id="add-playlist-input" ref={this.focusAddPlaylistInput} className='form-control' placeholder="Name Your Playlist" />
                <input type="hidden" name="authenticity_token" value={this.props.authenticity_token} />
              </form>
+    }
+  },
+  focusAddPlaylistInput: function(ref) {
+    n = ReactDOM.findDOMNode(ref)
+    if (n) {
+      n.focus();
     }
   },
   playlistDetails: function(playlist, __, event) {
@@ -75,43 +83,39 @@ var Playlists = React.createClass({
   },
   render: function() {
     if (!this.props.showing) {
-      <div></div>
-    }
-    else if (this.state.playlistView === "allPlaylists") {
-      var playlists =
-        <div className="list-group">
-          <a href="#" onClick={this.addPlaylist} className="list-group-item new-playlist-item">
-            {this.newPlaylistItem()}
-          </a>
-          {this.props.playlists.map(function(playlist, index){
-            return (
-              <a
-                href="#"
-                key={index}
-                id={playlist.id}
-                onClick={this.playlistDetails.bind(playlist)}
-                className="list-group-item playlist-list-item">
-              {playlist.name}
-              </a>
-            )
-          }.bind(this))}
-        </div>
-      var playlistHeader = "My Playlists"
+      return <div></div>
+    } else if (this.state.playlistView === "allPlaylists") {
+      return <div className="col-sm-1 col-md-3 playlist-sidebar">
+                <div className="playlist-header">My Playlists</div>
+                <br />
+                <div className="list-group">
+                  <a href="#" onClick={this.addPlaylist} className="list-group-item new-playlist-item">
+                    {this.newPlaylistItem()}
+                  </a>
+                  {this.props.playlists.map(function(playlist, index){
+                    return <a
+                              href="#"
+                              key={index}
+                              id={playlist.id}
+                              onClick={this.playlistDetails.bind(playlist)}
+                              className="list-group-item playlist-list-item">
+                            {playlist.name}
+                            </a>
+                  }.bind(this))}
+                </div>
+              </div>
     } else {
       var currentList = this.findPlaylist(this.state.activePlayListId)
       var playlists = <Playlist songs={currentList.playlist_songs} playMe={this.props.playMe}/>
-      var playlistHeader =
-        <span>
-          <a href="#" onClick={this.goBack}><i className="fa fa-chevron-left custom-icons" aria-hidden="true" /></a>
-          <span className="playlist-title">{currentList.name}</span>
-          <a href="#" onClick={this.deletePlaylist}><i className="fa fa-trash custom-icon playlist-trash" aria-hidden="true" /></a>
-        </span>
-    }
-
-    return <div className="col-sm-1 col-md-3 playlist-sidebar">
-              <div className="playlist-header">{playlistHeader}</div>
+      return <div className="col-sm-1 col-md-3 playlist-sidebar">
+              <div className="playlist-header">
+                <a href="#" onClick={this.goBack}><i className="fa fa-chevron-left custom-icons" aria-hidden="true" /></a>
+                <span className="playlist-title">{currentList.name}</span>
+                <a href="#" onClick={this.deletePlaylist}><i className="fa fa-trash custom-icon playlist-trash" aria-hidden="true" /></a>
+              </div>
               <br />
               {playlists}
             </div>
+    }
   }
 });
