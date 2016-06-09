@@ -18,6 +18,11 @@
 .song-container:first-child {
   margin-top: 50px;
 }
+
+.song-container:last-child {
+  margin-bottom: 60px;
+}
+
 .song-container.panel {
   border-radius: 2px;
 }

@@ -1,6 +1,6 @@
 var App = React.createClass({
   getInitialState: function() {
-    return {songs: [], addable: false, showing: true, playing: false, currentSong: "", currentSource: "", currentPlaylist: null, playerVariable: null, fetched: false, playYoutube: [], playlists: this.props.playlists}
+    return {songs: [], sortedSongs: [], addable: false, showing: true, playing: false, currentSong: "", currentSource: "", currentPlaylist: null, playerVariable: null, fetched: false, playYoutube: [], playlists: this.props.playlists}
   },
   parseSoundCloud: function(songs) {
     soundCloudSongs = []
@@ -63,11 +63,10 @@ var App = React.createClass({
     $.ajax({
       method: "GET",
       url: "http://api.soundcloud.com/tracks.json",
-      data: {client_id: "4346c8125f4f5c40ad666bacd8e96498", q: $("#search-term").val(), limit: "100", order: "hotness"},
+      data: {client_id: "4346c8125f4f5c40ad666bacd8e96498", q: $("#search-term").val(), limit: "40", order: "hotness"},
       success: function(data) {
         console.log(data);
         this.setState({ songs: this.state.songs.concat(this.parseSoundCloud(data)) });
-
       }.bind(this),
       error: function() {
         console.log("nope");
@@ -78,7 +77,7 @@ var App = React.createClass({
     $.ajax({
       method: "GET",
       url: "https://www.googleapis.com/youtube/v3/search",
-      data: {part: "id, snippet", q: $("#search-term").val(), type: "video",key: "AIzaSyCgc_LxS73WKGeyFplInVMxuCR332dbOls"},
+      data: {part: "id, snippet", q: $("#search-term").val(), type: "video", maxResults: 5, key: "AIzaSyCgc_LxS73WKGeyFplInVMxuCR332dbOls"},
       success: function(data) {
         console.log(data);
         this.parseYouTube(data).then(function (youtubeSongs) {
@@ -88,7 +87,16 @@ var App = React.createClass({
       error: function() {
         console.log("nope");
       }
+      // Consider using .then(this.sortSongs) to try to sort the songs
     });
+  },
+  sortSongs:function() {
+    var sortedSongs = this.state.songs.sort(function(a, b) {
+        parseInt(a.popularity) - parseInt(b.popularity);
+    });
+    console.log("INC SORT:");
+    console.log(sortedSongs);
+    this.setState({sortedSongs: sortedSongs});
   },
   playMe: function(event, songName, songId, source) {
     event.preventDefault();

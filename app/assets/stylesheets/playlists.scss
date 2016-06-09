@@ -27,6 +27,10 @@
     justify-content: center;
   }
 
+  .playlist-list-item:last-child {
+    margin-bottom: 60px;
+  }
+
   .playlist-title {
     margin-left: 50px;
   }
@@ -45,8 +49,7 @@
 .add-playlist-form {
   width: 100%;
 }
-.source-soundcloud,
-.source-youtube {
+.source-soundcloud, .source-youtube {
   margin-left: 5px;
 }
 .source-soundcloud {
