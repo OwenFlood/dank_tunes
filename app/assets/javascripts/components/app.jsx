@@ -1,6 +1,6 @@
 var App = React.createClass({
   getInitialState: function() {
-    return {songs: [], sortedSongs: [], addable: false, showing: true, playing: false, currentSong: "", currentSource: "", currentPlaylist: null, playerVariable: null, fetched: false, playYoutube: [], playlists: this.props.playlists}
+    return {songs: [], sortedSongs: [], addable: false, playlistShowing: true, playing: false, currentSong: "", currentSource: "", currentPlaylist: null, playerVariable: null, fetched: false, playYoutube: [], playlists: this.props.playlists}
   },
   parseSoundCloud: function(songs) {
     soundCloudSongs = []
@@ -139,7 +139,7 @@ var App = React.createClass({
       player.pause();
       this.setState({playing: false, currentSource: "", currentSong: ""});
     } else if (this.state.currentSource === "youtube") {
-      console.log("Hello World");
+      this.player.loadVideoById(null);
       this.setState({playing: false, playYoutube: [], currentSource: "", currentSong: ""});
     }
   },
@@ -180,35 +180,20 @@ var App = React.createClass({
     })
   },
   togglePlaylist: function(playlist) {
-    if (this.state.addable) {
-      this.setState({addable: false, currentPlaylist: null})
-    } else {
-      this.setState({addable: true, currentPlaylist: playlist});
-    }
+    this.state.addable ? this.setState({addable: false, currentPlaylist: null}) : this.setState({addable: true, currentPlaylist: playlist});
   },
   togglePlaylistBar: function() {
-    if (this.state.showing) {
-      this.setState({showing: false});
-    } else {
-      this.setState({showing: true});
-    }
+    this.state.playlistShowing ? this.setState({playlistShowing: false}) : this.setState({playlistShowing: true});
   },
   render: function() {
-    if (this.state.showing) {
-      var containerClasses = 'container col-sm-11 col-md-9'
-    } else {
-      var containerClasses = 'container'
-    }
+    this.state.playlistShowing ? var containerClasses = 'container col-sm-11 col-md-9' : var containerClasses = 'container';
     return <div className={containerClasses}>
             <h2 className='app-title'>Enjoy the dankest of tunes...</h2>
             <SearchBar onSearch={this.searchFilter} /> <br /> <br />
             <EmbedYoutube song={this.state.playYoutube} />
             <SongList addToPlaylist={this.addToPlaylist} addable={this.state.addable} playMe={this.playMe} songs={this.state.songs} />
             <NowPlaying togglePlaylistBar={this.togglePlaylistBar} handlePlayPause={this.handlePlayPause} currentSong={this.state.currentSong} />
-            <Playlists showing={this.state.showing} togglePlaylist={this.togglePlaylist} playlists={this.state.playlists} playMe={this.playMe} updatePlaylists={this.updatePlaylists} />
+            <Playlists showing={this.state.playlistShowing} togglePlaylist={this.togglePlaylist} playlists={this.state.playlists} playMe={this.playMe} updatePlaylists={this.updatePlaylists} />
            </div>
   }
 });
-
-// For Creating a playlist song:
-// PlaylistSong.create(song_host: "soundcloud", song_id: 180729095, song_name: "Vanic X K.Flay - Make Me Fade", song_artist: "VANIC Official", thumbnail_link: "https://i1.sndcdn.com/artworks-000155718375-l5hg9e-large.jpg", popularity: 13947102, playlist_id: 1)
