@@ -33,12 +33,15 @@ var PlaylistSideBar = React.createClass({
       url: "http://localhost:3000/playlists/" + this.state.activePlayList.id,
       beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
       success: function() {
+        debugger
         console.log("DELETED");
       },
       error: function(error) {
         console.log(error);
       }
     });
+    debugger
+    this.props.togglePlaylist(null);
     this.setState({activePlayList: null, playlistView: "allPlaylists"});
   },
   addPlaylist: function() {
@@ -95,7 +98,6 @@ var PlaylistSideBar = React.createClass({
     this.props.togglePlaylist();
   },
   render: function() {
-    console.log(this.props.playlists);
     if (!this.props.showing) {
       return <div></div>
     } else if (this.state.playlistView === "allPlaylists") {
