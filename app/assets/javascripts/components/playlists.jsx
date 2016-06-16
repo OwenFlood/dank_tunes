@@ -46,19 +46,17 @@ var Playlists = React.createClass({
   },
   newPlaylistItem: function() {
     if (this.state.newPlaylistItem === "add") {
-      return <span><i className='fa fa-plus add-playlist-icon' />Add New Playlist</span>
+      return <span><i className="fa fa-plus add-playlist-icon" />Add New Playlist</span>
     } else if (this.state.newPlaylistItem === "form") {
-      return <form className='add-playlist-form'  onSubmit={this.newPlaylist}>
-               <input type="text" id="add-playlist-input" ref={this.focusAddPlaylistInput} className='form-control' placeholder="Name Your Playlist" />
+      return <form className="add-playlist-form" onSubmit={this.newPlaylist}>
+               <input type="text" id="add-playlist-input" ref={this.focusAddPlaylistInput} className="form-control" placeholder="Name Your Playlist" />
                <input type="hidden" name="authenticity_token" value={this.props.authenticity_token} />
              </form>
     }
   },
   focusAddPlaylistInput: function(ref) {
     n = ReactDOM.findDOMNode(ref)
-    if (n) {
-      n.focus();
-    }
+    if (n) { n.focus() };
   },
   playlistDetails: function(playlist, __, event) {
     p = this.findPlaylist(playlist.target.id)
@@ -67,14 +65,6 @@ var Playlists = React.createClass({
   },
   findPlaylist: function(playlistId) {
     return _.find(this.props.playlists, {id: parseInt(playlistId)});
-  },
-  renderPlaylistSongs: function(playlist) {
-    playlist.playlist_songs.map(function(song, index){
-      console.log(song.song_name);
-      return  <a href="#" key={index} className="list-group-item">
-                {song.song_name}
-              </a>
-    });
   },
   goBack: function(event) {
     event.preventDefault();
