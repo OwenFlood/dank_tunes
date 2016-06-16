@@ -100,7 +100,7 @@ var App = React.createClass({
   },
   playMe: function(event, songName, songId, source) {
     event.preventDefault();
-
+    debugger
 
     if (this.state.currentSource === "soundcloud") {
       this.state.playerVariable.stop();
@@ -186,7 +186,11 @@ var App = React.createClass({
     this.state.playlistShowing ? this.setState({playlistShowing: false}) : this.setState({playlistShowing: true});
   },
   render: function() {
-    this.state.playlistShowing ? var containerClasses = 'container col-sm-11 col-md-9' : var containerClasses = 'container';
+    if (this.state.playlistShowing) {
+      var containerClasses = 'container col-sm-11 col-md-9'
+    } else {
+      var containerClasses = 'container'
+    }
     return <div className={containerClasses}>
             <h2 className='app-title'>Enjoy the dankest of tunes...</h2>
             <SearchBar onSearch={this.searchFilter} /> <br /> <br />
