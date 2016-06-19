@@ -61,7 +61,7 @@ var App = React.createClass({
     $.ajax({
       method: "GET",
       url: "http://api.soundcloud.com/tracks.json",
-      data: {client_id: "4346c8125f4f5c40ad666bacd8e96498", q: $("#search-term").val(), limit: "20", order: "hotness"},
+      data: {client_id: this.props.client_id, q: $("#search-term").val(), limit: "20", order: "hotness"},
       success: function(data) {
         console.log(data);
         this.setState({ songs: this.state.songs.concat(this.parseSoundCloud(data)) });
@@ -105,7 +105,7 @@ var App = React.createClass({
     }
 
     if (source === "soundcloud") {
-      var scPlayer = new SoundCloudAudio('5d3aaf910add018f35ba65e325fcf227');
+      var scPlayer = new SoundCloudAudio(this.props.client_id);
       this.setState({currentSource: "soundcloud", playerVariable: scPlayer});
       scPlayer.play({streamUrl: 'https://api.soundcloud.com/tracks/' + songId + '/stream'});
     } else if (source === "youtube") {
