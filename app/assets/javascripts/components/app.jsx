@@ -45,11 +45,9 @@ var App = React.createClass({
         data: {id: song.id.videoId,  key: "AIzaSyCgc_LxS73WKGeyFplInVMxuCR332dbOls", part: "statistics"},
         success: function(data) {
           updatedSong.viewCount = data.items[0].statistics.viewCount;
-          console.log(`Processed song ${song.snippet.title}`)
           resolve(updatedSong);
         },
         error: function(err) {
-          console.log(err);
           reject(err);
         }
       });
@@ -79,13 +77,12 @@ var App = React.createClass({
       url: "https://www.googleapis.com/youtube/v3/search",
       data: {part: "id, snippet", q: $("#search-term").val(), type: "video", maxResults: 5, key: "AIzaSyCgc_LxS73WKGeyFplInVMxuCR332dbOls"},
       success: function(data) {
-        console.log(data);
         this.parseYouTube(data).then(function (youtubeSongs) {
           this.setState({ songs: this.state.songs.concat(youtubeSongs) });
         }.bind(this));
       }.bind(this),
-      error: function() {
-        console.log("nope");
+      error: function(error) {
+        console.log(error);
       }
       // Consider using .then(this.sortSongs) to try to sort the songs
     });
@@ -100,7 +97,6 @@ var App = React.createClass({
   },
   playMe: function(event, songName, songId, source) {
     event.preventDefault();
-    debugger
 
     if (this.state.currentSource === "soundcloud") {
       this.state.playerVariable.stop();
@@ -158,11 +154,10 @@ var App = React.createClass({
         "playlist_song[playlist_id]": this.state.currentPlaylist.id,
       },
       success: function() {
-        console.log("Song successfully added");
         this.updatePlaylists();
       }.bind(this),
-      error: function() {
-        console.log("Song was unable to add");
+      error: function(error) {
+        console.log(error);
       }
     });
   },
@@ -172,7 +167,7 @@ var App = React.createClass({
       url: "http://localhost:3000/users/" + this.props.current_user.id + "/playlists",
       success: function(data) {
         console.log(data);
-        this.setState({playlists: data})
+        this.setState({playlists: data});
       }.bind(this),
       error: function(error) {
         console.log(error);
