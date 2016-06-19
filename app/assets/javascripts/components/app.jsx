@@ -39,10 +39,11 @@ var App = React.createClass({
   getYoutubeViews: function(song) {
     return new Promise(function (resolve, reject) {
       var updatedSong = Object.assign({}, song);
+      debugger
       $.ajax({
         method: "GET",
         url: "https://www.googleapis.com/youtube/v3/videos",
-        data: {id: song.id.videoId,  key: "AIzaSyCgc_LxS73WKGeyFplInVMxuCR332dbOls", part: "statistics"},
+        data: {id: song.id.videoId,  key: this.props.youtube_client_id, part: "statistics"},
         success: function(data) {
           updatedSong.viewCount = data.items[0].statistics.viewCount;
           resolve(updatedSong);
@@ -51,7 +52,7 @@ var App = React.createClass({
           reject(err);
         }
       });
-    });
+    }.bind(this));
   },
   searchFilter: function(e) {
     e.preventDefault();
@@ -61,7 +62,7 @@ var App = React.createClass({
     $.ajax({
       method: "GET",
       url: "http://api.soundcloud.com/tracks.json",
-      data: {client_id: this.props.client_id, q: $("#search-term").val(), limit: "20", order: "hotness"},
+      data: {client_id: this.props.soundcloud_client_id, q: $("#search-term").val(), limit: "20", order: "hotness"},
       success: function(data) {
         console.log(data);
         this.setState({ songs: this.state.songs.concat(this.parseSoundCloud(data)) });
@@ -75,7 +76,7 @@ var App = React.createClass({
     $.ajax({
       method: "GET",
       url: "https://www.googleapis.com/youtube/v3/search",
-      data: {part: "id, snippet", q: $("#search-term").val(), type: "video", maxResults: 5, key: "AIzaSyCgc_LxS73WKGeyFplInVMxuCR332dbOls"},
+      data: {part: "id, snippet", q: $("#search-term").val(), type: "video", maxResults: 5, key: this.props.youtube_client_id},
       success: function(data) {
         this.parseYouTube(data).then(function (youtubeSongs) {
           this.setState({ songs: this.state.songs.concat(youtubeSongs) });
@@ -105,7 +106,7 @@ var App = React.createClass({
     }
 
     if (source === "soundcloud") {
-      var scPlayer = new SoundCloudAudio(this.props.client_id);
+      var scPlayer = new SoundCloudAudio(this.props.soundcloud_client_id);
       this.setState({currentSource: "soundcloud", playerVariable: scPlayer});
       scPlayer.play({streamUrl: 'https://api.soundcloud.com/tracks/' + songId + '/stream'});
     } else if (source === "youtube") {

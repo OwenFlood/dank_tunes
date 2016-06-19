@@ -8,6 +8,11 @@
   <!-- <% end %> -->
 </div>
 
-<%= react_component "App", {songs: @tracks, current_user: current_user, playlists: @playlists, client_id: ENV["client_id"]} %>
+<%= react_component "App", {songs: @tracks,
+                            current_user: current_user,
+                            playlists: @playlists,
+                            soundcloud_client_id: ENV["soundcloud_client_id"],
+                            youtube_client_id: ENV["youtube_client_id"]
+                            } %>
 
 <script src="https://connect.soundcloud.com/sdk/sdk-3.1.1.js"></script>

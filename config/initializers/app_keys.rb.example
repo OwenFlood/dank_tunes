@@ -1,1 +1,2 @@
-ENV["client_id"] = "CLIENT ID HERE"
+ENV["client_id"] = "SOUNDCLOUD API CLIENT ID HERE"
+ENV["youtube_client_id"] = "YOUTUBE API KEY HERE"
