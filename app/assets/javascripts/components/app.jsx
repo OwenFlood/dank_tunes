@@ -39,7 +39,7 @@ var App = React.createClass({
   getYoutubeViews: function(song) {
     return new Promise(function (resolve, reject) {
       var updatedSong = Object.assign({}, song);
-      debugger
+      
       $.ajax({
         method: "GET",
         url: "https://www.googleapis.com/youtube/v3/videos",
@@ -102,7 +102,7 @@ var App = React.createClass({
     if (this.state.currentSource === "soundcloud") {
       this.state.playerVariable.stop();
     } else if (this.state.currentSource === "youtube") {
-      // this.state.playerVariable.stopVideo();
+      this.player.loadVideoById(null);
     }
 
     if (source === "soundcloud") {
