@@ -1,6 +1,6 @@
 var App = React.createClass({
   getInitialState: function() {
-    return {songs: [], sortedSongs: [], addable: false, playlistShowing: true, playing: false, currentSong: "", currentSource: "", currentPlaylist: null, playerVariable: null, fetched: false, playYoutube: [], playlists: this.props.playlists}
+    return {songs: [], sortedSongs: [], addable: false, playlistBarShowing: true, currentSong: "", currentSource: "", currentPlaylist: null, playerVariable: null, playlists: this.props.playlists}
   },
   parseSoundCloud: function(songs) {
     soundCloudSongs = []
@@ -31,7 +31,6 @@ var App = React.createClass({
             source: "youtube"
           };
         });
-
         resolve(youtubeSongs);
       });
     })
@@ -39,7 +38,7 @@ var App = React.createClass({
   getYoutubeViews: function(song) {
     return new Promise(function (resolve, reject) {
       var updatedSong = Object.assign({}, song);
-      
+
       $.ajax({
         method: "GET",
         url: "https://www.googleapis.com/youtube/v3/videos",
@@ -64,11 +63,10 @@ var App = React.createClass({
       url: "http://api.soundcloud.com/tracks.json",
       data: {client_id: this.props.soundcloud_client_id, q: $("#search-term").val(), limit: "20", order: "hotness"},
       success: function(data) {
-        console.log(data);
         this.setState({ songs: this.state.songs.concat(this.parseSoundCloud(data)) });
       }.bind(this),
-      error: function() {
-        console.log("nope");
+      error: function(error) {
+        console.log(error);
       }
     });
 
@@ -110,11 +108,11 @@ var App = React.createClass({
       this.setState({currentSource: "soundcloud", playerVariable: scPlayer});
       scPlayer.play({streamUrl: 'https://api.soundcloud.com/tracks/' + songId + '/stream'});
     } else if (source === "youtube") {
-      this.setState({playYoutube: [songName, songId, source], currentSource: "youtube"});
+      this.setState({currentSource: "youtube"});
 
       if (this.player) {
         setTimeout(function () {
-          this.player.loadVideoById(this.state.playYoutube[1]);
+          this.player.loadVideoById(songId);
         }.bind(this), 100);
       } else {
         this.player = new YT.Player('player', {
@@ -124,7 +122,7 @@ var App = React.createClass({
         });
         this.setState({playerVariable: this.player});
         setTimeout(function () {
-          this.player.loadVideoById(this.state.playYoutube[1]);
+          this.player.loadVideoById(songId);
         }.bind(this), 1000);
       }
     }
@@ -134,11 +132,12 @@ var App = React.createClass({
     if (this.state.currentSource === "soundcloud") {
       var player = this.state.playerVariable
       player.pause();
-      this.setState({playing: false, currentSource: "", currentSong: ""});
+      this.setState({currentSource: "", currentSong: ""});
     } else if (this.state.currentSource === "youtube") {
       this.player.loadVideoById(null);
-      this.setState({playing: false, playYoutube: [], currentSource: "", currentSong: ""});
+      this.setState({currentSource: "", currentSong: ""});
     }
+    this.setState({playerVariable: null})
   },
   addToPlaylist: function(name, songId, source, author, thumbnail, popularity) {
     $.ajax({
@@ -167,7 +166,6 @@ var App = React.createClass({
       method: 'GET',
       url: "http://localhost:3000/users/" + this.props.current_user.id + "/playlists",
       success: function(data) {
-        console.log(data);
         this.setState({playlists: data});
       }.bind(this),
       error: function(error) {
@@ -179,10 +177,10 @@ var App = React.createClass({
     this.state.addable ? this.setState({addable: false, currentPlaylist: null}) : this.setState({addable: true, currentPlaylist: playlist});
   },
   togglePlaylistBar: function() {
-    this.state.playlistShowing ? this.setState({playlistShowing: false}) : this.setState({playlistShowing: true});
+    this.setState({playlistBarShowing: !this.state.playlistBarShowing});
   },
   render: function() {
-    if (this.state.playlistShowing) {
+    if (this.state.playlistBarShowing) {
       var containerClasses = 'container col-sm-11 col-md-9'
     } else {
       var containerClasses = 'container'
@@ -190,10 +188,10 @@ var App = React.createClass({
     return <div className={containerClasses}>
             <h2 className='app-title'>Enjoy the dankest of tunes...</h2>
             <SearchBar onSearch={this.searchFilter} /> <br /> <br />
-            <EmbedYoutube song={this.state.playYoutube} />
+            <EmbedYoutube />
             <SongList addToPlaylist={this.addToPlaylist} addable={this.state.addable} playMe={this.playMe} songs={this.state.songs} />
             <NowPlaying togglePlaylistBar={this.togglePlaylistBar} handlePlayPause={this.handlePlayPause} currentSong={this.state.currentSong} />
-            <Playlists showing={this.state.playlistShowing} togglePlaylist={this.togglePlaylist} playlists={this.state.playlists} playMe={this.playMe} updatePlaylists={this.updatePlaylists} />
+            <Playlists showing={this.state.playlistBarShowing} togglePlaylist={this.togglePlaylist} playlists={this.state.playlists} playMe={this.playMe} updatePlaylists={this.updatePlaylists} />
            </div>
   }
 });
