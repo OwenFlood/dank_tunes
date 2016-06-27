@@ -93,6 +93,7 @@ var Playlists = React.createClass({
                             </a>
                   }.bind(this))}
                 </div>
+                <EmbedYoutube source={this.props.currentSource} />
               </div>
     } else {
       var currentList = this.findPlaylist(this.state.activePlayListId)

@@ -1,4 +1,7 @@
-// Hides youtube video
-iframe {
-  display: none;
+.youtube-iframe {
+  position: absolute;
+  bottom: 50px;
+  right: 0px;
+  width: 319px;
+  height: 228px;
 }
