@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20160607165946) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "playlist_songs", force: :cascade do |t|
     t.string   "song_host"
     t.integer  "song_id"
@@ -25,7 +28,7 @@ ActiveRecord::Schema.define(version: 20160607165946) do
     t.datetime "updated_at",     null: false
   end
 
-  add_index "playlist_songs", ["playlist_id"], name: "index_playlist_songs_on_playlist_id"
+  add_index "playlist_songs", ["playlist_id"], name: "index_playlist_songs_on_playlist_id", using: :btree
 
   create_table "playlists", force: :cascade do |t|
     t.string   "name"
@@ -34,7 +37,7 @@ ActiveRecord::Schema.define(version: 20160607165946) do
     t.datetime "updated_at", null: false
   end
 
-  add_index "playlists", ["user_id"], name: "index_playlists_on_user_id"
+  add_index "playlists", ["user_id"], name: "index_playlists_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "first_name"
@@ -45,4 +48,6 @@ ActiveRecord::Schema.define(version: 20160607165946) do
     t.datetime "updated_at",      null: false
   end
 
+  add_foreign_key "playlist_songs", "playlists"
+  add_foreign_key "playlists", "users"
 end
