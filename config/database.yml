@@ -10,3 +10,9 @@ development:
 test:
   <<: *default
   database: dank_tunes_test
+
+production:
+  <<: *default
+  database: dank_tunes_production
+  username: dank_tunes
+  password: <%= ENV['DANK_TUNES_DATABASE_PASSWORD'] %>
