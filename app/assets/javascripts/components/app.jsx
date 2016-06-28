@@ -64,6 +64,7 @@ var App = React.createClass({
       data: {client_id: this.props.soundcloud_client_id, q: $("#search-term").val(), limit: "20", order: "hotness"},
       success: function(data) {
         this.setState({ songs: this.state.songs.concat(this.parseSoundCloud(data)) });
+        debugger
       }.bind(this),
       error: function(error) {
         console.log(error);
