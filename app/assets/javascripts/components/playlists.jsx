@@ -6,7 +6,8 @@ var Playlists = React.createClass({
       playlistView: "allPlaylists",
       playlistData: []}
   },
-  newPlaylist: function() {
+  newPlaylist: function(event) {
+    event.preventDefault();
     this.setState({newPlaylistItem: "add"});
     $.ajax({
       method: "POST",
