@@ -85,4 +85,6 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  ENV["BASE_URL"] = "http://dank-tunes.herokuapp.com/"
 end

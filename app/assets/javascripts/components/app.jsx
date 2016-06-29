@@ -143,7 +143,7 @@ var App = React.createClass({
   addToPlaylist: function(name, songId, source, author, thumbnail, popularity) {
     $.ajax({
       method: "POST",
-      url: "http://localhost:3000/playlists/:playlist_id/playlist_songs",
+      url: "http://" + this.props.base_url + "/playlists/:playlist_id/playlist_songs",
       beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
       data: {
         "playlist_song[song_host]": source,
@@ -165,7 +165,7 @@ var App = React.createClass({
   updatePlaylists: function () {
     $.ajax({
       method: 'GET',
-      url: "http://localhost:3000/users/" + this.props.current_user.id + "/playlists",
+      url: "http://" + this.props.base_url + "/users/" + this.props.current_user.id + "/playlists",
       success: function(data) {
         this.setState({playlists: data});
       }.bind(this),
@@ -191,7 +191,7 @@ var App = React.createClass({
             <SearchBar onSearch={this.searchFilter} /> <br /> <br />
             <SongList addToPlaylist={this.addToPlaylist} addable={this.state.addable} playMe={this.playMe} songs={this.state.songs} />
             <NowPlaying togglePlaylistBar={this.togglePlaylistBar} handlePlayPause={this.handlePlayPause} currentSong={this.state.currentSong} />
-            <Playlists currentSource={this.state.currentSource} showing={this.state.playlistBarShowing} togglePlaylist={this.togglePlaylist} playlists={this.state.playlists} playMe={this.playMe} updatePlaylists={this.updatePlaylists} />
+            <Playlists baseUrl={this.props.base_url} currentSource={this.state.currentSource} showing={this.state.playlistBarShowing} togglePlaylist={this.togglePlaylist} playlists={this.state.playlists} playMe={this.playMe} updatePlaylists={this.updatePlaylists} />
            </div>
   }
 });

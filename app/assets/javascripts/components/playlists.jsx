@@ -11,7 +11,7 @@ var Playlists = React.createClass({
     this.setState({newPlaylistItem: "add"});
     $.ajax({
       method: "POST",
-      url: "http://localhost:3000/playlists",
+      url: "http://" + this.props.baseUrl + "/playlists",
       beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
       data: {
         "playlist[name]": $("#add-playlist-input").val()
@@ -28,7 +28,7 @@ var Playlists = React.createClass({
   deletePlaylist: function() {
     $.ajax({
       method: "DELETE",
-      url: "http://localhost:3000/playlists/" + this.state.activePlayListId,
+      url: "http://" + this.props.baseUrl + "/playlists/" + this.state.activePlayListId,
       beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
       success: function() {
         console.log("DELETED");
