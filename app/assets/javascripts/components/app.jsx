@@ -188,10 +188,12 @@ var App = React.createClass({
     }
     return <div className={containerClasses}>
             <h2 className='app-title'>Enjoy the dankest of tunes...</h2>
+            <UserHandler />
             <SearchBar onSearch={this.searchFilter} /> <br /> <br />
             <SongList addToPlaylist={this.addToPlaylist} addable={this.state.addable} playMe={this.playMe} songs={this.state.songs} />
             <NowPlaying togglePlaylistBar={this.togglePlaylistBar} handlePlayPause={this.handlePlayPause} currentSong={this.state.currentSong} />
             <Playlists baseUrl={this.props.base_url} currentSource={this.state.currentSource} showing={this.state.playlistBarShowing} togglePlaylist={this.togglePlaylist} playlists={this.state.playlists} playMe={this.playMe} updatePlaylists={this.updatePlaylists} />
+            <SignInModal />
            </div>
   }
 });
