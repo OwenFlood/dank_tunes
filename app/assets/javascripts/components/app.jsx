@@ -193,7 +193,7 @@ var App = React.createClass({
             <SongList addToPlaylist={this.addToPlaylist} addable={this.state.addable} playMe={this.playMe} songs={this.state.songs} />
             <NowPlaying togglePlaylistBar={this.togglePlaylistBar} handlePlayPause={this.handlePlayPause} currentSong={this.state.currentSong} />
             <Playlists baseUrl={this.props.base_url} currentSource={this.state.currentSource} showing={this.state.playlistBarShowing} togglePlaylist={this.togglePlaylist} playlists={this.state.playlists} playMe={this.playMe} updatePlaylists={this.updatePlaylists} />
-            <SignInModal />
+            <SignInModal baseUrl={this.props.base_url} />
            </div>
   }
 });
